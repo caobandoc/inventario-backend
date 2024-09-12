@@ -4,11 +4,11 @@ spring:
   cloud:
     gateway:
       routes:
-#        - id: auth-service
-#          uri: lb://auth-service
-#          predicates:
-#            - Path=/auth/**
-#
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+
 #        - id: inventory-service
 #          uri: lb://inventory-service
 #          predicates:
