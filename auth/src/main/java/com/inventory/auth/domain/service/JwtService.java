@@ -37,7 +37,6 @@ public class JwtService implements IJwtUseCase {
 
     public String generateToken(UserAuth userAuth) {
         Map<String, Object> extraClaims = Map.of(
-                "role", userAuth.getAuthorities().toString(),
                 "id", userAuth.getId(),
                 "name", userAuth.getName(),
                 "email", userAuth.getEmail(),

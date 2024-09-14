@@ -13,6 +13,11 @@ spring:
           uri: lb://product-service
           predicates:
             - Path=/product/**
+          filters:
+            - name: TokenValidationFilter
+            - name: MethodValidationFilter
+              args:
+                methods: POST, PUT
 
 server:
   port: 8000
