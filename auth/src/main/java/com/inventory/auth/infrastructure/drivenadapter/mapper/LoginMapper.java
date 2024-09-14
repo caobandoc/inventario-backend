@@ -1,13 +1,13 @@
 package com.inventory.auth.infrastructure.drivenadapter.mapper;
 
-import com.inventory.auth.domain.dto.LoginResponse;
+import com.inventory.auth.domain.dto.LoginResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LoginMapper {
 
-    public LoginResponse toDto(String token, long expirationTime) {
-        return LoginResponse.builder()
+    public LoginResponseDto toDto(String token, long expirationTime) {
+        return LoginResponseDto.builder()
                 .token(token)
                 .expiresIn(expirationTime)
                 .build();

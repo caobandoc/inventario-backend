@@ -2,7 +2,7 @@ package com.inventory.auth.infrastructure.entrypoint;
 
 import com.inventory.auth.applications.IAuthUseCase;
 import com.inventory.auth.applications.IJwtUseCase;
-import com.inventory.auth.domain.dto.LoginResponse;
+import com.inventory.auth.domain.dto.LoginResponseDto;
 import com.inventory.auth.domain.dto.RegisterUserDto;
 import com.inventory.auth.domain.dto.UserDto;
 import com.inventory.auth.infrastructure.drivenadapter.entities.UserAuth;
@@ -26,23 +26,17 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(@RequestBody RegisterUserDto registerUserDto) {
-        UserDto user = authUseCase.register(registerUserDto);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(authUseCase.register(registerUserDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody UserDto userDto) {
-        LoginResponse token = authUseCase.login(userDto);
-        return ResponseEntity.ok(token);
+    public ResponseEntity<LoginResponseDto> login(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(authUseCase.login(userDto));
     }
 
     @GetMapping("/validate")
     public ResponseEntity<UserAuth> validate(@RequestParam String token) {
-        try {
-            jwtUseCase.isValidateToken(token);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        jwtUseCase.isValidateToken(token);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

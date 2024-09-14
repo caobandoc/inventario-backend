@@ -1,7 +1,7 @@
 package com.inventory.auth.infrastructure.drivenadapter.repository;
 
 import com.inventory.auth.applications.IJwtUseCase;
-import com.inventory.auth.domain.dto.LoginResponse;
+import com.inventory.auth.domain.dto.LoginResponseDto;
 import com.inventory.auth.domain.dto.UserDto;
 import com.inventory.auth.infrastructure.drivenadapter.crud.IUserCrudRepository;
 import com.inventory.auth.infrastructure.drivenadapter.entities.UserAuth;
@@ -16,10 +16,10 @@ public class LoginRepository {
     private final IUserCrudRepository userCrudRepository;
     private final LoginMapper loginMapper;
 
-    public LoginResponse login(UserDto userDto) {
+    public LoginResponseDto login(UserDto userDto) {
         UserAuth userAuth = userCrudRepository.findByEmail(userDto.getEmail()).orElseThrow();
         String token = jwtUseCase.generateToken(userAuth);
-        LoginResponse obj = loginMapper.toDto(token, jwtUseCase.getExpirationTime());
+        LoginResponseDto obj = loginMapper.toDto(token, jwtUseCase.getExpirationTime());
         return obj;
     }
 }
