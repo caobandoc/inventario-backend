@@ -9,10 +9,10 @@ spring:
           predicates:
             - Path=/auth/**
 
-#        - id: inventory-service
-#          uri: lb://inventory-service
-#          predicates:
-#            - Path=/inventory/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**
 
 server:
   port: 8000

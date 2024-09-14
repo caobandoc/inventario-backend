@@ -1,13 +1,12 @@
 package com.inventory.auth.domain.service;
 
 import com.inventory.auth.applications.IAuthUseCase;
-import com.inventory.auth.domain.dto.LoginResponse;
+import com.inventory.auth.domain.dto.LoginResponseDto;
 import com.inventory.auth.domain.dto.RegisterUserDto;
 import com.inventory.auth.domain.dto.UserDto;
 import com.inventory.auth.infrastructure.drivenadapter.repository.LoginRepository;
 import com.inventory.auth.infrastructure.drivenadapter.repository.UserRepository;
-import com.inventory.auth.infrastructure.entrypoint.ExceptionHandlerController;
-import com.inventory.auth.infrastructure.entrypoint.exception.RegisteredUserException;
+import com.inventory.auth.domain.exception.RegisteredUserException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,7 +31,7 @@ public class AuthenticationService implements IAuthUseCase {
         return userRepository.save(input);
     }
 
-    public LoginResponse login(UserDto input) {
+    public LoginResponseDto login(UserDto input) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword()));
         return loginRepository.login(input);
     }

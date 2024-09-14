@@ -2,6 +2,7 @@ package com.inventory.auth.domain.service;
 
 import com.inventory.auth.applications.IJwtUseCase;
 import com.inventory.auth.infrastructure.drivenadapter.entities.UserAuth;
+import com.inventory.auth.domain.exception.TokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -41,7 +41,8 @@ public class JwtService implements IJwtUseCase {
                 "id", userAuth.getId(),
                 "name", userAuth.getName(),
                 "email", userAuth.getEmail(),
-                "createdAt", userAuth.getCreatedAt()
+                "createdAt", userAuth.getCreatedAt(),
+                "role", userAuth.getAuthorities().iterator().next().getAuthority()
         );
         return generateToken(extraClaims, userAuth);
     }
@@ -80,7 +81,11 @@ public class JwtService implements IJwtUseCase {
 
     @Override
     public void isValidateToken(String token) {
-        extractAllClaims(token);
+        try{
+            extractAllClaims(token);
+        }catch (Exception e){
+            throw new TokenException("Invalid token");
+        }
     }
 
     private Claims extractAllClaims(String token) {

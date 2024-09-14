@@ -41,13 +41,19 @@ public class UserAuth implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private Boolean isAdmin;
+
     @CreationTimestamp
     @Column(nullable = false, name = "created_at")
     private Date createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        if (Boolean.TRUE.equals(isAdmin)) {
+            return List.of(() -> "ROLE_ADMIN");
+        }
+        return List.of(() -> "ROLE_USER");
     }
 
     @Override
