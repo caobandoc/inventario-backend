@@ -19,6 +19,13 @@ spring:
               args:
                 methods: POST, PUT
 
+        - id: shoppingcart-service
+          uri: lb://shoppingcart-service
+          predicates:
+            - Path=/shoppingcart/**
+          filters:
+            - name: TokenValidationFilter
+
 server:
   port: 8000
 

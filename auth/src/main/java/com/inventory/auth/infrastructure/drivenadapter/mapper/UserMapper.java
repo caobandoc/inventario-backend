@@ -17,6 +17,7 @@ public class UserMapper {
                 .email(registerUserDto.getEmail())
                 .password(passwordEncoder.encode(registerUserDto.getPassword()))
                 .name(registerUserDto.getName())
+                .isAdmin(true)
                 .build();
     }
 
