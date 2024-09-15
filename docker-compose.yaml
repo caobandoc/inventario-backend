@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  eureka:
+    image: eureka-server:0.0.1
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - inventory
+
+  gateway:
+    image: gateway-service:0.0.1
+    container_name: gateway
+    ports:
+      - "8000:8000"
+    networks:
+      - inventory
+    depends_on:
+      - eureka
+
+  auth:
+    image: auth-service:0.0.1
+    container_name: auth
+    ports:
+      - "8001:8001"
+    networks:
+      - inventory
+  products:
+    image: products-service:0.0.1
+    container_name: products
+    ports:
+      - "8002:8002"
+    networks:
+      - inventory
+    depends_on:
+      - eureka
+      
+  shoppingcart:
+    image: shoppingcart-service:0.0.1
+    container_name: shoppingcart
+    ports:
+      - "8003:8003"
+    networks:
+      - inventory
+    depends_on:
+      - eureka
+      
+networks:
+  inventory:
+    driver: bridge

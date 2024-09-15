@@ -18,6 +18,7 @@ for %%p in (%projects%) do (
         exit /b 1
     )
     call gradlew clean build -x test
+    call %%p.bat
     if errorlevel 1 (
         echo Error al compilar proyecto %%p
         exit /b 1
